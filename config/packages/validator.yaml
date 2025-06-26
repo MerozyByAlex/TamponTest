@@ -1,0 +1,29 @@
+# config/packages/validator.yaml
+framework:
+    validation:
+        enabled: true # Ensures the validator component is enabled (usually true by default if installed)
+
+        # Enables validator auto-mapping support.
+        # This allows Symfony to infer basic validation constraints (e.g., NotNull, Length)
+        # from your Doctrine entity metadata (e.g., nullable=false, length attributes).
+        # You can still add more specific Assert\ attributes directly in your entities.
+        auto_mapping:
+            App\Entity\: [] # Auto-map constraints for all entities under the App\Entity namespace
+
+        # Optional: You can also enable annotations if you are using them in entities,
+        # though attributes are preferred for new Symfony versions.
+        # enable_annotations: true # Defaults to false if using PHP 8 attributes primarily
+
+        # Optional: Configure other global validator settings if needed,
+        # e.g., custom constraint validators, mapping files for XML/YAML validation definitions.
+        # validator_factories: []
+        # mapping:
+        #     paths: []
+
+# Configuration specific to the 'test' environment
+when@test:
+    framework:
+        validation:
+            # Disables the NotCompromisedPassword validator in the test environment
+            # to prevent external API calls during automated tests, making them faster and more reliable.
+            not_compromised_password: false

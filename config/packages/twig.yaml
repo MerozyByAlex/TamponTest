@@ -1,0 +1,11 @@
+# config/packages/twig.yaml
+twig:
+    file_name_pattern: '*.twig'
+    globals:
+        # Makes the list of supported locales available in all Twig templates
+        # It references the parameter we defined in services.yaml (parameters.app.supported_locales)
+        supported_locales: '%app.supported_locales%'
+
+when@test:
+    twig:
+        strict_variables: true

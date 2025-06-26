@@ -1,0 +1,91 @@
+# config/packages/security.yaml
+imports:
+    - { resource: roles/hierarchy.yaml, type: yaml }
+
+security:
+    password_hashers:
+        App\Entity\User: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        refresh:
+            pattern: ^/api/token/refresh
+            stateless: true
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /api/login_check
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
+            logout:
+                path: /api/logout
+
+        admin:
+            pattern: ^/(fr|en|de|es)/admin_93576798
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Security\AdminLoginFormAuthenticator
+            logout:
+                path: admin_logout
+                target: admin_login
+                enable_csrf: true
+                csrf_token_id: 'logout_token'
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /admin_93576798
+                secure: true
+                httponly: true
+                samesite: lax
+            two_factor:
+                auth_form_path: /admin_93576798/2fa
+                check_path: /admin_93576798/2fa_check
+                default_target_path: /admin_93576798
+                enable_csrf: true
+                trusted_parameter_name: _trusted
+                remember_me_sets_trusted: true
+
+    access_control:
+        # Autorise uniquement l’accès aux routes 2FA pendant la vérification 2FA
+        - { path: ^/(fr|en|de|es)/admin_93576798/2fa, roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+
+        # Routes publiques pour l’API
+        - { path: ^/api/(docs(\.json(ld)?)?|contexts)$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+
+        # Routes publiques pour le login admin
+        - { path: ^/(fr|en|de|es)/admin_93576798/login, roles: PUBLIC_ACCESS }
+
+        # Accès réservé aux employés dans l’espace admin
+        - { path: ^/(fr|en|de|es)/admin_93576798, roles: ROLE_EMPLOYEE }
+
+        # API privée
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+        # Accès public par défaut au reste du site
+        - { path: ^/, roles: PUBLIC_ACCESS }
+
+when@test:
+    security:
+        password_hashers:
+            App\Entity\User:
+                algorithm: auto
+                cost: 4
+                time_cost: 3
+                memory_cost: 10

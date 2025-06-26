@@ -1,0 +1,124 @@
+{# templates/admin/contact/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'contact.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('pages/backoffice/contact/contact.css') }}"> 
+{% endblock %}
+
+{% block body %}
+{# On connecte le contrôleur Stimulus à ce conteneur principal #}
+<div class="contact-container" data-controller="contact-form">
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+        <span class="sun"></span>
+        <span class="moon"></span>
+    </button>
+
+    <div class="contact-header">
+        <h1 class="contact-title">{{ 'contact.heading'|trans }}</h1>
+    </div>
+
+    {# Le contenu de ce cadre sera remplacé par le succès ou ré-affiché avec les erreurs. #}
+    <turbo-frame id="contact_form_frame">
+        <p class="contact-subtitle">{{ 'contact.subheading'|trans }}</p>
+
+        {% form_theme contactForm 'form/custom_form_theme.html.twig' %}
+        
+        {{ form_start(contactForm, {'attr': {'novalidate': 'novalidate'}}) }}
+        
+            <div class="form-row">
+                {{ form_label(contactForm.email) }}
+                {{ form_widget(contactForm.email) }}
+                {{ form_errors(contactForm.email) }}
+            </div>
+            
+            <div class="form-row">
+                {{ form_label(contactForm.subject) }}
+                {{ form_widget(contactForm.subject, {
+                    'attr': {
+                        'data-contact-form-target': 'subject',
+                        'data-action': 'change->contact-form#updateVisibility'
+                    }
+                }) }}
+                {{ form_errors(contactForm.subject) }}
+            </div>
+
+            <div id="priority-field-wrapper" class="form-row conditional-section {{ visible_section == 'priority' ? 'is-visible' : '' }}" data-contact-form-target="prioritySection">
+                {{ form_label(contactForm.priority) }}
+                {# === MODIFICATION ICI === #}
+                {{ form_widget(contactForm.priority, {'attr': {
+                    'data-contact-form-target': 'priorityInput',
+                    'data-action': 'change->contact-form#updatePriorityColor'
+                }}) }}
+                {{ form_errors(contactForm.priority) }}
+            </div>
+
+            <div id="access-request-fields" class="conditional-section {{ visible_section == 'access' ? 'is-visible' : '' }}" data-contact-form-target="accessSection">
+                <div class="form-row">
+                    {{ form_label(contactForm.lastName) }}
+                    {{ form_widget(contactForm.lastName) }}
+                    {{ form_errors(contactForm.lastName) }}
+                </div>
+                <div class="form-row">
+                    {{ form_label(contactForm.firstName) }}
+                    {{ form_widget(contactForm.firstName) }}
+                    {{ form_errors(contactForm.firstName) }}
+                </div>
+                
+                <div class="form-row-inline">
+                    <div class="form-row">
+                        {{ form_label(contactForm.phonePrefix) }}
+                        {{ form_widget(contactForm.phonePrefix) }}
+                        {{ form_errors(contactForm.phonePrefix) }}
+                    </div>
+                    <div class="form-row">
+                        {{ form_label(contactForm.phone) }}
+                        {{ form_widget(contactForm.phone, {'attr': {
+                            'data-contact-form-target': 'phoneInput',
+                            'data-action': 'input->contact-form#formatPhone'
+                        }}) }}
+                        {{ form_errors(contactForm.phone) }}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    {{ form_label(contactForm.companyName) }}
+                    {{ form_widget(contactForm.companyName) }}
+                    {{ form_errors(contactForm.companyName) }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                {{ form_label(contactForm.message) }}
+                {{ form_widget(contactForm.message) }}
+                {{ form_errors(contactForm.message) }}
+            </div>
+
+            {{ form_widget(contactForm.honeypot) }}
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">{{ 'contact.button'|trans }}</button>
+            </div>
+        {{ form_end(contactForm) }}
+    </turbo-frame>
+
+    <div class="back-to-login">
+        <a href="{{ path('admin_login') }}">{{ 'contact.back_to_login'|trans }}</a>
+    </div>
+
+    <div class="language-switch">
+        {% for locale in ['fr','en','de','es'] %}
+            <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': locale})) }}" class="{{ app.request.locale == locale ? 'active' }}">
+                {{ locale|upper }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

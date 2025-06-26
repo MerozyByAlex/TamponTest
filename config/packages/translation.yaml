@@ -1,0 +1,20 @@
+# config/packages/translation.yaml
+framework:
+    # This sets the default language for your application's translation component.
+    # It's consistent with your main framework.yaml.
+    default_locale: 'fr'
+
+    translator:
+        # The default path where translation files are stored.
+        default_path: '%kernel.project_dir%/translations'
+        
+        # Fallback locales are used when a translation is not available in the current locale.
+        # It's good practice to have a fallback, like English.
+        fallbacks:
+            - 'en'
+
+        # ==================================================================
+        # AJOUT : Section pour inclure les sous-dossiers de traduction
+        # ==================================================================
+        paths:
+            - '%kernel.project_dir%/translations/contact'

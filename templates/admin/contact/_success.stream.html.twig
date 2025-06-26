@@ -1,0 +1,14 @@
+{# templates/admin/contact/_success.stream.html.twig #}
+
+<turbo-stream action="replace" target="contact_form_frame">
+    <template>
+        {# On utilise la nouvelle clé de traduction pour le sous-titre de succès #}
+        <p class="contact-subtitle">{{ 'contact.subheading_success'|trans }}</p>
+
+        <div class="contact-success-message" style="margin-top: 2rem;">
+            <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0Z" fill="none"/><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8Z"/></svg>
+            <p class="success-main-message">{{ 'contact.success_message'|trans }}</p>
+            <p class="success-details">{{ success_message }}</p>
+        </div>
+    </template>
+</turbo-stream>

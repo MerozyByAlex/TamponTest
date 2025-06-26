@@ -1,0 +1,22 @@
+# config/routes.yaml
+
+# Routes internes SANS locale
+web_profiler:
+    resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
+    prefix: /_wdt
+
+profiler:
+    resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+    prefix: /_profiler
+
+# Routes de l'application AVEC /{_locale}
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+    prefix: /{_locale}
+    defaults:
+        _locale: fr
+    requirements:
+        _locale: fr|en|de|es

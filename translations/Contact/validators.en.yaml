@@ -1,0 +1,12 @@
+form.contact.email.not_blank: 'Please enter your email address.'
+form.contact.email.invalid: "The email '{{ value }}' is not a valid email."
+form.contact.subject.not_blank: 'Please choose a subject.'
+form.contact.priority.not_blank: 'Please choose a priority for this subject.'
+form.contact.message.not_blank_detailed: 'This field cannot be empty, you must detail your request.'
+form.contact.message.min_length: 'You have not detailed your request enough, please complete it.'
+form.contact.lastName.not_blank: 'You must provide your last name.'
+form.contact.firstName.not_blank: 'You must provide your first name.'
+form.contact.phonePrefix.not_blank: 'Please select a phone prefix.'
+form.contact.phone.not_blank: 'The phone number is required.'
+form.contact.phone.invalid_format: 'This phone number format is not valid.'
+form.contact.phone.prefix_mismatch: 'This phone number does not match the selected prefix.'

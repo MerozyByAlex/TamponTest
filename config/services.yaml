@@ -1,0 +1,69 @@
+# config/services.yaml
+parameters:
+    # On ajoute la ligne qui manquait
+    app.admin_email: '%env(ADMIN_EMAIL)%'
+    
+    # Vos paramètres existants sont conservés
+    app.default_locale: 'fr'
+    app.supported_locales: ['en', 'fr', 'de', 'es']
+
+services:
+    # Default configuration for services in this file
+    _defaults:
+        autowire: true      # Automatically injects dependencies.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # This makes classes in src/ available to be used as services.
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # --- SUBSCRIBER & PROCESSOR CONFIGURATION ---
+
+    # Explicit configuration for LocaleSubscriber to manage language.
+    App\EventSubscriber\LocaleSubscriber:
+        arguments:
+            $defaultLocale: '%app.default_locale%'
+            $supportedLocales: '%app.supported_locales%'
+
+    App\EventSubscriber\RedirectToLocalizedRouteSubscriber:
+        arguments:
+            $defaultLocale: '%app.default_locale%'
+            $supportedLocales: '%app.supported_locales%'
+
+    # The CorrelationIdProcessor is tagged to be used by Monolog.
+    App\Monolog\CorrelationIdProcessor:
+        tags:
+            # This tag tells the MonologBundle to add this processor to all log handlers.
+            - { name: monolog.processor }
+
+    # --- CONTROLLER CONFIGURATION ---
+
+    # Explicit configuration for AdminLanguageController.
+    App\Controller\Admin\AdminLanguageController:
+        arguments:
+            $supportedLocales: '%app.supported_locales%'
+            $defaultAdminLocale: 'fr'
+
+    # --- SERVICE-SPECIFIC CONFIGURATION ---
+
+    # This is the configuration for the security logger service we analyzed.
+    # It ensures that any log messages from this service go to the 'security' channel.
+    App\Service\SecurityEventLogger:
+        arguments:
+            $securityLogger: '@monolog.logger.security'
+
+    # === [NEW SECTION] SERIALIZER CONFIGURATION ===
+    # This section is added to handle the serialization of Money objects for your API.
+    App\Serializer\MoneyNormalizer:
+        tags: [serializer.normalizer]
+
+    # === [NEW SECTION] SCHEB 2FA ALIAS RESOLVERS ===
+    Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface:
+        alias: scheb_two_factor.security.totp_authenticator
+
+    Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\QrCode\QrCodeGeneratorInterface:
+        alias: scheb_two_factor.security.totp_qr_code_generator

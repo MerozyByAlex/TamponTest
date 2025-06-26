@@ -1,0 +1,15 @@
+# config/packages/csrf.yaml
+framework:
+    # Configures CSRF protection for Symfony Forms
+    form:
+        csrf_protection:
+            enabled: true # Default is true if symfony/security-csrf is installed and forms are enabled. Explicit is fine.
+            token_id: null # Using 'null' will let Symfony use its default (_token or form_name__token).
+                           # Or keep 'submit' if you have a specific reason for this default.
+                           # Note: Login form uses 'authenticate' explicitly.
+
+    # General CSRF protection settings for the application.
+    # Often, no explicit configuration is needed here if defaults are fine
+    # and symfony/security-csrf is installed.
+    # csrf_protection:
+    #    enabled: true # This is often the default.

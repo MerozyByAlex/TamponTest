@@ -1,0 +1,244 @@
+/* ================================================================== */
+/* STYLES SPÉCIFIQUES À LA PAGE DE CONNEXION (APPROCHE MOBILE-FIRST)  */
+/* ================================================================== */
+
+/* --- Layout de la page --- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* --- Conteneur Principal --- */
+.login-container {
+    max-width: 420px;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    background: var(--surface-bg-color, white);
+    color: var(--surface-text-color, #222);
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-top: 4rem; 
+}
+
+/* --- Positionnement spécifique du bouton de thème --- */
+.login-container .theme-toggle {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--surface-bg-color);
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.login-container .theme-toggle:hover {
+    transform: translateX(-50%) scale(1.1) rotate(15deg);
+}
+.theme-toggle .sun,
+.theme-toggle .moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+}
+.theme-toggle .sun {
+    background-color: var(--text-color);
+    border-radius: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+.theme-toggle .moon {
+    background-color: var(--text-color);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+}
+:root.dark-theme .theme-toggle .sun {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(180deg);
+}
+:root.dark-theme .theme-toggle .moon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(180deg);
+}
+
+/* --- Sélecteur de langue --- */
+.language-switch {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem; 
+}
+.language-switch a {
+    background: none;
+    border: 1px solid var(--input-border-color, #ccc);
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--text-color, #222);
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.language-switch a:hover,
+.language-switch a.active {
+    background-color: var(--primary-color, #4a90e2);
+    color: var(--primary-text-color, white);
+    border-color: var(--primary-color, #4a90e2);
+}
+
+/* --- Styles du Formulaire --- */
+
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-container form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: var(--input-bg-color, #fff);
+    border: 1px solid var(--input-border-color, #ccc);
+    color: var(--input-text-color, #222);
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color, #4a90e2);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* ================================================================== */
+/* MISE À JOUR : CHECKBOX ET LIEN DE CONTACT ALIGNÉS                  */
+/* ================================================================== */
+.checkbox {
+    margin-bottom: 1.5rem;
+    /* SOLUTION DÉFINITIVE AVEC CSS GRID POUR UNE STABILITÉ PARFAITE */
+    display: grid;
+    grid-template-columns: 1fr auto; /* La checkbox prend l'espace, le lien s'ajuste */
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.checkbox label {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.9;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    line-height: 1;
+}
+
+.checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    width: 1.25em;
+    height: 1.25em;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    margin-right: 0.5em;
+    display: inline-grid;
+    place-content: center;
+    transition: all 0.2s ease;
+}
+.checkbox input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.checkbox input[type="checkbox"]::before {
+    content: '';
+    width: 0.7em;
+    height: 0.7em;
+    transform: scale(0);
+    transition: 0.12s transform ease-in-out;
+    background-color: white;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>") no-repeat center / contain;
+}
+.checkbox input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+/* Style pour le nouveau lien de contact */
+.contact-admin-link {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    text-decoration: none;
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    transition: opacity 0.2s;
+}
+.contact-admin-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+
+/* --- Bouton Connexion --- */
+.btn-primary {
+    background-image: linear-gradient(45deg, var(--primary-color, #4a90e2) 0%, #007bff 100%);
+    border: none;
+    color: var(--primary-text-color, white);
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+/* --- Message d’erreur --- */
+.alert {
+    background-color: #ffe0e0;
+    color: #a00;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* --- Responsive --- */
+@media (min-width: 480px) {
+    .login-container {
+        padding: 2rem;
+        padding-top: 4rem;
+    }
+}

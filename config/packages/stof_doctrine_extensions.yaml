@@ -1,0 +1,14 @@
+# config/packages/stof_doctrine_extensions.yaml
+stof_doctrine_extensions:
+    default_locale: en_US # Default locale for translatable, etc.
+    orm:
+        default: # This is for the default entity manager
+            # Enable the listeners you want to use
+            timestampable: true
+            sluggable: true
+            tree: true
+            # blameable: true  # Uncomment if you want to use Blameable (tracks user who created/updated)
+            # loggable: true   # Uncomment if you want to log entity changes (versioning)
+            # translatable: true # Uncomment if you need translatable content
+            # sortable: true   # Uncomment if you need sortable behavior
+            softdeleteable: true # Uncomment if you want soft delete capabilities

@@ -1,0 +1,14 @@
+# config/packages/gesdinet_jwt_refresh_token.yaml
+gesdinet_jwt_refresh_token:
+    refresh_token_class: App\Entity\RefreshToken
+    ttl: 1296000 # 15 days
+    single_use: true
+    cookie:
+        enabled: true
+        same_site: 'strict'
+        path: /api/token/refresh # Matches the firewall pattern for token refresh
+        domain: null
+        http_only: true
+        secure: true # MUST be true in production (requires HTTPS)
+        remove_token_from_body: true
+    # token_parameter_name: refresh_token # Default is 'refresh_token', uncomment to change

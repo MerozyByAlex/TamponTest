@@ -1,0 +1,44 @@
+# .dockerignore
+
+### SYMFONY ###
+# Ignore runtime files, cache, and logs
+/var/
+/public/build/
+
+# Ignore local environment files that may contain secrets
+.env.local
+.env.*.local
+
+### COMPOSER ###
+# Ignore composer dependencies, they are installed inside the container
+/vendor/
+
+### NPM / YARN ###
+# Ignore frontend dependencies, they should be managed in a separate frontend container or build step
+/node_modules/
+
+### IDE ###
+# Ignore IDE-specific configuration files
+.idea/
+.vscode/
+
+### GIT ###
+# Ignore the entire Git history and local git configurations
+.git/
+.gitignore
+.gitattributes
+
+### DOCKER ###
+# Ignore Docker-related files from the build context itself
+docker-compose.yml
+docker-compose.override.yml
+Dockerfile
+
+### TESTING ###
+# Ignore test artifacts and cache
+.phpunit.result.cache
+var/coverage/
+
+### OS-SPECIFIC ###
+# Ignore macOS specific files
+.DS_Store

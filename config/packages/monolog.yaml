@@ -1,0 +1,139 @@
+monolog:
+    channels:
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - security    # Channel dedicated to security events
+        - event       # Channel for kernel events, doctrine events, etc.
+
+when@dev:
+    monolog:
+        handlers:
+            main:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                channels: ["!event", "!security"] # Exclude dedicated channels
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine", "!console", "!security"] # Exclude dedicated channels
+            # Dedicated handler for security events in development
+            security_dev:
+                type: stream
+                path: "%kernel.logs_dir%/dev_security.log"
+                level: info
+                channels: ["security"] # This handler only processes the 'security' channel
+                formatter: monolog.formatter.json # JSON for easier parsing
+            # Dedicated handler for general events in development
+            event_dev:
+                type: stream
+                path: "%kernel.logs_dir%/dev_event.log" # Separate log file for events
+                level: debug # Capture all events in dev for easier debugging
+                channels: ["event"] # This handler only processes the 'event' channel
+                formatter: monolog.formatter.json # JSON for consistency
+
+when@test:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested_test_main
+                excluded_http_codes: [404, 405]
+                channels: ["!event", "!security"] # Exclude dedicated channels
+            nested_test_main:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+            # Dedicated handler for security events in test environment
+            security_test:
+                type: stream
+                path: "%kernel.logs_dir%/test_security.log"
+                level: info # Capture relevant security events
+                channels: ["security"]
+                formatter: monolog.formatter.json # JSON for consistency with other test/dev logs
+            # Dedicated handler for general events in test environment
+            event_test:
+                type: stream
+                path: "%kernel.logs_dir%/test_event.log"
+                level: info
+                channels: ["event"]
+                formatter: monolog.formatter.json # JSON for automated analysis
+
+when@prod:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested_prod_main
+                excluded_http_codes: [404, 405]
+                buffer_size: 50
+                channels: ["!event", "!deprecation", "!security"] # Exclude dedicated channels
+            nested_prod_main:
+                type: stream
+                path: php://stderr
+                level: debug
+                formatter: monolog.formatter.json
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine", "!security"] # Exclude security
+            deprecation:
+                type: stream
+                channels: ["deprecation"]
+                path: php://stderr
+                formatter: monolog.formatter.json
+
+            # --- Production Security Logging Pipeline ---
+            security_prod_stream: # Step 1: Actual writer
+                type: stream
+                path: php://stderr # Or "%kernel.logs_dir%/prod_security.log" for a separate file
+                level: info
+                formatter: monolog.formatter.json
+            security_prod_buffer: # Step 2: Buffering layer
+                type: buffer
+                handler: security_prod_stream
+                buffer_size: 200 # Adjust as needed
+                level: info
+            security_deduplicated: # Step 3: Deduplication layer (optional)
+                type: deduplication
+                handler: security_prod_buffer
+                time: 60 # Deduplication window in seconds
+                level: info
+                channels: ["security"] # This whole pipeline processes only 'security'
+
+            # Parallel Syslog handler for security events (real-time monitoring)
+            security_syslog:
+                type: syslog
+                ident: 'app_secure_prod' # App identifier in syslog
+                facility: auth # Syslog facility for security/authentication events
+                level: notice # Log NOTICE and above (more critical alerts)
+                channels: ["security"]
+                formatter: monolog.formatter.line # Syslog usually prefers line format
+
+            # --- Production Critical Application Error Logging ---
+            # Dedicated file log for critical application errors
+            critical_errors_file:
+                type: stream
+                path: "%kernel.logs_dir%/prod_critical.log" # Or php://stderr if preferred
+                level: critical # Only CRITICAL level messages
+                formatter: monolog.formatter.json
+                channels: ["!event", "!doctrine", "!security"] # Focus on app-level critical errors
+
+            # Optional: Parallel Syslog handler for critical application errors
+            critical_errors_syslog:
+                type: syslog
+                ident: 'app_critical_prod' # App identifier in syslog
+                facility: local0 # Example: use a local facility for app critical errors
+                level: critical # Only CRITICAL level messages
+                channels: ["!event", "!doctrine", "!security"] # Mirroring channels from critical_errors_file
+                formatter: monolog.formatter.line # Or JSON if your syslog system handles it well
+
+            # --- Production Event Logging ---
+            # Dedicated handler for general events (kernel events, etc.)
+            event_prod:
+                type: stream
+                path: "%kernel.logs_dir%/prod_event.log" # Or php://stderr
+                level: warning # Log WARNING and above for general events
+                channels: ["event"] # This handler only processes the 'event' channel
+                formatter: monolog.formatter.json # JSON for consistency

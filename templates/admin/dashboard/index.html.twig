@@ -1,0 +1,102 @@
+{# C:\avecsa\backend\templates\admin\dashboard\index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'dashboard.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# 
+      CORRECTION TURBO : On ajoute data-turbo-track="reload".
+      Cela indique à Turbo que si cette feuille de style change (si elle est ajoutée ou retirée
+      lors de la navigation), il doit forcer un rechargement complet de la page au lieu
+      d'une transition classique. Cela garantit que tous les styles sont appliqués correctement
+      dès le premier affichage.
+    #}
+    <link rel="stylesheet" href="{{ asset('pages/backoffice/dashboard/dashboard.css') }}" data-turbo-track="reload">
+{% endblock %}
+
+{% block body %}
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="header-title">{{ 'dashboard.title'|trans }}</h1>
+            
+            <div class="header-actions">
+                <div class="language-dropdown">
+                    <button class="language-dropdown-toggle">
+                        <span>{{ app.request.locale|upper }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="language-dropdown-menu">
+                        {% for locale in ['fr', 'en', 'de', 'es'] %}
+                            <a href="{{ path('admin_change_locale', {'locale': locale}) }}" class="{{ app.request.locale == locale ? 'active' }}">
+                                {{ locale|upper }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+                    <span class="sun"></span>
+                    <span class="moon"></span>
+                </button>
+
+                <form method="post" action="{{ path('admin_logout') }}" data-turbo="false">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout_token') }}">
+                    <button type="submit" class="btn-logout" title="{{ 'admin.action.logout'|trans }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {# On réintroduit le conteneur pour centrer le contenu #}
+        <div class="main-content-wrapper">
+            {% if app.flashes is not empty %}
+                <ul class="flash-messages" role="status">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <li class="flash-message flash-{{ label }}">{{ message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="welcome-banner">
+                <h2>{{ 'dashboard.greeting'|trans({'%name%': app.user.userIdentifier}) }} 👋</h2>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">{{ 'dashboard.security.title'|trans|default('Security Settings') }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ 'dashboard.security.2fa_title'|trans|default('Two-Factor Authentication') }}</h5>
+                        {% if is_2fa_enabled is defined and is_2fa_enabled %}
+                            <p class="card-text status-text"><span class="status-icon success">✔</span> {{ 'dashboard.security.2fa_enabled'|trans|default('2FA is enabled.') }}</p>
+                        {% else %}
+                            <p class="card-text status-text"><span class="status-icon warning">⚠</span> {{ 'dashboard.security.2fa_disabled_recommendation'|trans|default('Enable 2FA for better security.') }}</p>
+                            <a href="{{ path('admin_2fa_setup') }}" class="btn-primary">{{ 'dashboard.security.enable_2fa_button'|trans|default('Enable 2FA') }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">{{ 'dashboard.debug.title'|trans|default('Debug Information') }}</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>
+                                <strong>Controller:</strong>
+                                <code>{{ app.request.attributes.get('_controller')|split('\\')|last|default('N/A') }}</code>
+                            </li>
+                            <li>
+                                <strong>Template:</strong>
+                                <code>{{ _self }}</code>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

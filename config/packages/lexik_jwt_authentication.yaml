@@ -1,0 +1,26 @@
+# config/packages/lexik_jwt_authentication.yaml
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    token_ttl: 900
+    # Deprecated in LexikJWTAuthenticationBundle v3 in favor of relying on firewall exceptions
+    # throw_exceptions: true # Default behavior of the authenticator is to throw exceptions
+
+    # Default values for authorization_header are usually sufficient:
+    # authorization_header:
+    #     enabled: true
+    #     prefix:  Bearer
+    #     name:    Authorization
+
+    # set_cookies section remains commented as refresh token cookies are handled by GesdinetJWTRefreshTokenBundle,
+    # and access tokens are typically returned in the JSON response body.
+    # set_cookies:
+    #     access_token: # Not recommended for SPAs if refresh token is in HttpOnly cookie
+    #         lifetime: null
+    #         samesite: strict
+    #         path: /
+    #     refresh_token: # Handled by GesdinetJWTRefreshTokenBundle
+    #         lifetime: null # Should match Gesdinet's refresh token cookie TTL if enabled here
+    #         samesite: strict
+    #         path: /api/token/refresh # Should match Gesdinet's refresh token cookie path

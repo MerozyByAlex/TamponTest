@@ -1,0 +1,238 @@
+/* C:\avecsa\backend\public\pages\backoffice\dashboard\dashboard.css */
+
+/* ================================================================== */
+/* FIX LAYOUT : Annule la mise en page en colonnes (CONSERVÉ)         */
+/* ================================================================== */
+body {
+    display: block !important;
+}
+
+/* ================================================================== */
+/* STYLES SPÉCIFIQUES AU DASHBOARD                                    */
+/* ================================================================== */
+
+/* --- Layout Principal du Dashboard --- */
+.main-header {
+    background-color: var(--surface-bg-color);
+    border-bottom: 1px solid var(--input-border-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+:root.dark-theme .main-header {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 1rem;
+    min-height: 60px;
+}
+
+.header-title {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* --- Bouton de déconnexion --- */
+.btn-logout {
+    color: var(--text-color);
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    line-height: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.btn-logout:hover {
+    background-color: var(--input-border-color);
+}
+.btn-logout svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-color);
+}
+
+/* --- Contenu Principal du Dashboard --- */
+.main-content {
+    padding: 1.5rem 1rem;
+}
+
+/* CORRECTION : On applique la largeur max au nouveau conteneur */
+.main-content-wrapper {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome-banner {
+    background-color: var(--surface-bg-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--input-border-color);
+}
+
+.welcome-banner h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--surface-bg-color);
+    border-radius: 1rem;
+    border: 1px solid var(--input-border-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+}
+:root.dark-theme .card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--input-border-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.card-text {
+    margin-top: 0;
+    line-height: 1.6;
+}
+
+.card-body ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.card-body code {
+    background-color: var(--bg-color);
+    border: 1px solid var(--input-border-color);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.status-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-icon.success { color: #28a745; }
+.status-icon.warning { color: #ffc107; }
+
+/* --- Boutons de contenu --- */
+.btn-primary, .btn-success {
+    display: inline-block;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 1rem;
+    transition: opacity 0.2s;
+}
+
+/* CORRECTION : On force le bouton à ne pas prendre toute la largeur */
+.dashboard-grid .btn-primary {
+    width: auto;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    opacity: 0.85;
+}
+
+/* ... (Les autres styles pour Flash, 2FA, etc. restent inchangés) ... */
+.flash-messages { padding: 0; margin: 0 0 1.5rem 0; list-style: none; }
+.flash-message { padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid transparent; font-weight: 500; }
+.flash-success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+.flash-error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+.flash-info { background-color: #cce5ff; border-color: #b8daff; color: #004085; }
+.setup-2fa-grid { display: grid; gap: 2rem; align-items: flex-start; }
+.qr-code-container { text-align: center; }
+.qr-code-container h4, .verification-container h4 { margin-top: 0; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 600; }
+.qr-code-container p, .verification-container p { margin-top: 0; margin-bottom: 1.5rem; }
+.qr-code-image { max-width: 240px; width: 100%; height: auto; border: 4px solid var(--input-border-color); border-radius: 8px; padding: 0.5rem; background: white; }
+.secret-key-info { margin-top: 1.5rem; }
+.secret-key-code { background-color: var(--bg-color); border: 1px solid var(--input-border-color); padding: 0.75rem 1rem; border-radius: 8px; font-family: monospace; font-size: 1.1rem; font-weight: bold; word-break: break-all; text-align: center; }
+.form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.form-control { width: 100%; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid var(--input-border-color); background-color: var(--surface-bg-color); border-radius: 8px; transition: border-color 0.2s, box-shadow 0.2s; text-align: center; letter-spacing: 0.5em; }
+.form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--primary-color-translucent); }
+
+/* ================================================================== */
+/* MEDIA QUERIES                                                      */
+/* ================================================================== */
+@media (min-width: 768px) {
+    .main-header {
+        padding: 0 2rem;
+    }
+    .main-content {
+        padding: 2rem;
+    }
+    .header-actions {
+        gap: 1.5rem;
+    }
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+    .setup-2fa-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

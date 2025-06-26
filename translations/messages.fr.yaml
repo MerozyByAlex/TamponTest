@@ -1,0 +1,80 @@
+# translations/messages.fr.yaml
+
+login:
+  title: 'Connexion'
+  heading: 'Connexion'
+  email: 'Adresse e-mail'
+  password: 'Mot de passe'
+  stay_connected: 'Rester connecté'
+  contact_admin: "Contacter l'administrateur"
+  button: 'Se connecter'
+  logged_in_as: 'Connecté en tant que %identifier%'
+  logout: 'Déconnexion'
+  error: 'Identifiants invalides.'
+
+contact:
+  title: "Contacter l'administrateur"
+  heading: "Contacter l'administrateur"
+  subheading: "Un problème, une question ? Remplissez le formulaire ci-dessous."
+  subheading_success: "Merci de nous avoir contactés. Votre demande est maintenant en cours de traitement."
+  button: "Envoyer le message"
+  back_to_login: "Retour à la page de connexion"
+  success_message: "Votre message a correctement été envoyé."
+  flash_success: "Votre message a bien été envoyé. L'administrateur vous répondra dès que possible."
+
+form:
+  contact:
+    email:
+      label: 'Votre adresse e-mail'
+      placeholder: 'nom@exemple.com'
+    subject:
+      label: 'Sujet'
+      placeholder: 'Choisissez un sujet'
+      choices:
+        connection: 'Problème de connexion'
+        information: "Demande d'information"
+        feature: "Suggestion d'amélioration"
+        access: "Demande d'accès"
+    priority:
+      label: 'Priorité'
+      placeholder: 'Choisissez une priorité'
+      choices:
+        low: 'Basse'
+        medium: 'Moyenne'
+        high: 'Haute'
+        critical: 'Bloquant'
+    message:
+      label: 'Votre message'
+      placeholder: 'Décrivez votre demande en détail ici...'
+    lastName:
+      label: 'Nom'
+      placeholder: 'Votre nom de famille'
+    firstName:
+      label: 'Prénom'
+      placeholder: 'Votre prénom'
+    phonePrefix:
+      label: 'Indicatif'
+    phone:
+      label: 'N° de téléphone'
+    companyName:
+      label: 'Entreprise (Facultatif)'
+      placeholder: 'Le nom de votre société'
+
+admin:
+  action:
+    logout: 'Déconnexion'
+
+dashboard:
+  title: 'Tableau de bord'
+  greeting: 'Bonjour %name%'
+  message: "Ceci est l’espace d’administration de votre site."
+  controller_path_label: 'Contrôleur'
+  template_path_label: 'Template'
+  debug:
+    title: 'Informations de debug'
+  security:
+    title: 'Paramètres de sécurité'
+    2fa_title: 'Authentification à deux facteurs (2FA)'
+    2fa_enabled: "L’authentification à deux facteurs est activée."
+    2fa_disabled_recommendation: "Activez la 2FA pour une meilleure sécurité."
+    enable_2fa_button: 'Activer la 2FA'

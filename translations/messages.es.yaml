@@ -1,0 +1,80 @@
+# translations/messages.es.yaml
+
+login:
+  title: 'Iniciar sesión'
+  heading: 'Acceso'
+  email: 'Correo electrónico'
+  password: 'Contraseña'
+  stay_connected: 'Mantener la sesión iniciada'
+  contact_admin: 'Contactar al administrador'
+  button: 'Entrar'
+  logged_in_as: 'Conectado como %identifier%'
+  logout: 'Cerrar sesión'
+  error: 'Credenciales no válidas.'
+
+contact:
+  title: 'Contactar al administrador'
+  heading: 'Contactar al administrador'
+  subheading: '¿Un problema, una pregunta? Rellene el siguiente formulario.'
+  subheading_success: 'Gracias por contactarnos. Su solicitud está siendo procesada.'
+  button: 'Enviar mensaje'
+  back_to_login: 'Volver a la página de inicio de sesión'
+  success_message: 'Su mensaje ha sido enviado correctamente.'
+  flash_success: 'Su mensaje ha sido enviado con éxito. El administrador se pondrá en contacto con usted lo antes posible.'
+
+form:
+  contact:
+    email:
+      label: 'Tu dirección de correo electrónico'
+      placeholder: 'nombre@ejemplo.com'
+    subject:
+      label: 'Asunto'
+      placeholder: 'Elige un asunto'
+      choices:
+        connection: 'Problema de conexión'
+        information: 'Solicitud de información'
+        feature: 'Sugerencia de mejora'
+        access: 'Solicitud de acceso'
+    priority:
+      label: 'Prioridad'
+      placeholder: 'Elige una prioridad'
+      choices:
+        low: 'Baja'
+        medium: 'Media'
+        high: 'Alta'
+        critical: 'Crítica'
+    message:
+      label: 'Tu mensaje'
+      placeholder: 'Describe tu solicitud en detalle aquí...'
+    lastName:
+      label: 'Apellido'
+      placeholder: 'Su apellido'
+    firstName:
+      label: 'Nombre'
+      placeholder: 'Su nombre'
+    phonePrefix:
+      label: 'Prefijo'
+    phone:
+      label: 'Número de teléfono'
+    companyName:
+      label: 'Nombre de la empresa (Opcional)'
+      placeholder: 'El nombre de su empresa'
+
+admin:
+  action:
+    logout: 'Cerrar sesión'
+
+dashboard:
+  title: 'Panel de control'
+  greeting: 'Hola %name%'
+  message: 'Esta es el área de administración de su sitio.'
+  controller_path_label: 'Ruta del controlador'
+  template_path_label: 'Ruta de la plantilla'
+  debug:
+    title: 'Información de depuración'
+  security:
+    title: 'Configuración de seguridad'
+    2fa_title: 'Autenticación de dos factores (2FA)'
+    2fa_enabled: 'La autenticación de dos factores está activada.'
+    2fa_disabled_recommendation: 'Active la 2FA para mayor seguridad.'
+    enable_2fa_button: 'Activar 2FA'

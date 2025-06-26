@@ -1,0 +1,45 @@
+# config/packages/roles/hierarchy.yaml
+
+# ========================================
+# 🛡️ ROLE HIERARCHY CONFIGURATION
+# ========================================
+# This file defines the role hierarchy used in the application.
+# Each role on the left inherits permissions from the roles listed on its right.
+# Mainly used for access controls (voters, access_control...).
+# Based on App\Enum\RoleEnum::getRoleHierarchy()
+
+security:
+    role_hierarchy:
+        # ===============================
+        # 🎓 ADMINISTRATION
+        # ===============================
+        ROLE_ADMIN:
+            - ROLE_EMPLOYEE       # Access to everything an employee can do
+            - ROLE_SAGE           # ERP interconnection (read/write)
+            - ROLE_SELLER         # Sales and customer management
+            - ROLE_LOGISTICIAN    # Logistics and shipping tracking
+            - ROLE_DATA_AGENT     # Product data management (formerly GDPR agent)
+            - ROLE_AFTERSALES     # After-sales service, returns, warranties
+            - ROLE_DEV            # Advanced technical access
+            - ROLE_CUSTOMER       # Can view the site like a customer
+
+        # ===============================
+        # 🏢 SPECIALIZED EMPLOYEES
+        # ===============================
+        # These roles inherit from the base Employee role, granting them foundational employee access
+        # plus their specific permissions (managed via access_control or voters).
+        ROLE_SELLER:        [ROLE_EMPLOYEE]
+        ROLE_LOGISTICIAN:   [ROLE_EMPLOYEE]
+        ROLE_DATA_AGENT:    [ROLE_EMPLOYEE]
+        ROLE_AFTERSALES:    [ROLE_EMPLOYEE]
+        ROLE_DEV:           [ROLE_EMPLOYEE]
+
+        # ===============================
+        # 👤 CUSTOMERS
+        # ===============================
+        # Specific customer types inheriting from the base Customer role.
+        ROLE_CUSTOMER_CE:   [ROLE_CUSTOMER]     # Individual customer (e.g., for specific pricing)
+        ROLE_CUSTOMER_PRO:  [ROLE_CUSTOMER]     # Professional customer (e.g., B2B specific features/pricing)
+
+        # Note: Base roles like ROLE_EMPLOYEE and ROLE_CUSTOMER typically don't need to be listed
+        # on the left if they don't inherit from other roles. They serve as building blocks.

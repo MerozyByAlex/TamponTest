@@ -1,0 +1,21 @@
+# config/packages/framework.yaml
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    default_locale: fr
+
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks: [fr]
+
+    session:
+        enabled: true
+
+    # Si tu veux activer des fonctionnalités optionnelles comme ESI ou fragments :
+    # esi: true
+    # fragments: true
+
+    property_info:
+        enabled: true

@@ -1,0 +1,97 @@
+{# templates/security/2fa_setup.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ '2fa_setup.title'|trans|default('Enable 2FA') }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('pages/backoffice/dashboard/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="header-title">{{ '2fa_setup.title'|trans|default('Enable 2FA') }}</h1>
+            <div class="header-actions">
+                <div class="language-dropdown">
+                    <button class="language-dropdown-toggle">
+                        <span>{{ app.request.locale|upper }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="language-dropdown-menu">
+                        {% for locale in ['fr', 'en', 'de', 'es'] %}
+                            <a href="{{ path('admin_change_locale', {'locale': locale}) }}" class="{{ app.request.locale == locale ? 'active' }}">
+                                {{ locale|upper }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+                    <span class="sun"></span>
+                    <span class="moon"></span>
+                </button>
+                <form method="post" action="{{ path('admin_logout') }}" data-turbo="false">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout_token') }}">
+                    <button type="submit" class="btn-logout" title="{{ 'admin.action.logout'|trans }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="card">
+            <div class="card-header">{{ '2fa_setup.card.header'|trans|default("Enable Two-Step Verification") }}</div>
+            <div class="card-body">
+                {% if app.flashes is not empty %}
+                    <ul class="flash-messages" role="status">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <li class="flash-message flash-{{ label }}">{{ message }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p>{{ '2fa_setup.intro'|trans|default('To enhance your account security, please enable Two-Factor Authentication (2FA).') }}</p>
+                <hr style="margin: 1.5rem 0; border-color: var(--input-border-color);">
+                <form method="POST">
+                    <div class="setup-2fa-grid">
+                        <div class="qr-code-container">
+                            <h4>{{ '2fa_setup.step1.title'|trans|default('Step 1: Scan the QR Code') }}</h4>
+                            <p>{{ '2fa_setup.step1.instruction'|trans|default('Open your authenticator app and scan the following code:') }}</p>
+                            <img src="{{ qrCodeUri }}" alt="QR Code for 2FA setup" class="qr-code-image">
+                            <div class="secret-key-info">
+                                <p>{{ '2fa_setup.manual_key.instruction'|trans|default('If you cannot scan, manually enter this key:') }}</p>
+                                <div class="secret-key-code">
+                                    <code>{{ secretKey }}</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="verification-container">
+                            <h4>{{ '2fa_setup.step2.title'|trans|default('Step 2: Verify Your Device') }}</h4>
+                            <p>{{ '2fa_setup.step2.instruction'|trans|default('Enter the 6-digit code from the app to complete activation:') }}</p>
+                            <div>
+                                <label for="auth_code" class="form-label">{{ '2fa_setup.code.label'|trans|default('Verification Code') }}</label>
+                                <input  
+                                    type="text"  
+                                    name="auth_code"  
+                                    id="auth_code"  
+                                    class="form-control"
+                                    required  
+                                    autocomplete="one-time-code"  
+                                    autofocus  
+                                    maxlength="6"
+                                    inputmode="numeric"
+                                    pattern="\d{6}"
+                                    title="{{ '2fa_setup.code.hint'|trans|default('Please enter a 6-digit code') }}"
+                                >
+                                <button type="submit" class="btn-success" style="margin-top: 1.5rem;">{{ '2fa_setup.submit'|trans|default('Activate and Verify') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

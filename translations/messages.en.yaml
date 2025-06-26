@@ -1,0 +1,80 @@
+# translations/messages.en.yaml
+
+login:
+  title: 'Sign In'
+  heading: 'Login'
+  email: 'Email address'
+  password: 'Password'
+  stay_connected: 'Stay signed in'
+  contact_admin: 'Contact administrator'
+  button: 'Sign in'
+  logged_in_as: 'You are logged in as %identifier%'
+  logout: 'Logout'
+  error: 'Invalid credentials.'
+
+contact:
+  title: 'Contact Administrator'
+  heading: 'Contact Administrator'
+  subheading: 'A problem, a question? Fill out the form below.'
+  subheading_success: 'Thank you for contacting us. Your request is now being processed.'
+  button: 'Send Message'
+  back_to_login: 'Back to login page'
+  success_message: 'Your message has been sent successfully.'
+  flash_success: 'Your message has been sent successfully. The administrator will get back to you as soon as possible.'
+
+form:
+  contact:
+    email:
+      label: 'Your email address'
+      placeholder: 'name@example.com'
+    subject:
+      label: 'Subject'
+      placeholder: 'Choose a subject'
+      choices:
+        connection: 'Connection issue'
+        information: 'Information request'
+        feature: 'Improvement suggestion'
+        access: 'Access request'
+    priority:
+      label: 'Priority'
+      placeholder: 'Choose a priority'
+      choices:
+        low: 'Low'
+        medium: 'Medium'
+        high: 'High'
+        critical: 'Critical'
+    message:
+      label: 'Your message'
+      placeholder: 'Describe your request in detail here...'
+    lastName:
+      label: 'Last Name'
+      placeholder: 'Your last name'
+    firstName:
+      label: 'First Name'
+      placeholder: 'Your first name'
+    phonePrefix:
+      label: 'Prefix'
+    phone:
+      label: 'Phone number'
+    companyName:
+      label: 'Company Name (Optional)'
+      placeholder: 'Your company name'
+
+admin:
+  action:
+    logout: 'Logout'
+
+dashboard:
+  title: 'Dashboard'
+  greeting: 'Hello %name%'
+  message: 'This is the administration area of your site.'
+  controller_path_label: 'Controller Path'
+  template_path_label: 'Template Path'
+  debug:
+    title: 'Debug Information'
+  security:
+    title: 'Security Settings'
+    2fa_title: 'Two-Factor Authentication (2FA)'
+    2fa_enabled: 'Two-factor authentication is enabled.'
+    2fa_disabled_recommendation: 'Enable 2FA for better security.'
+    enable_2fa_button: 'Enable 2FA'

@@ -1,0 +1,59 @@
+# config/packages/nelmio_cors.yaml
+
+# This file configures the Cross-Origin Resource Sharing (CORS) settings
+# for your application, allowing your Next.js frontend to securely
+# communicate with your Symfony API.
+
+nelmio_cors:
+    # Default configuration for all paths that don't match a specific policy below.
+    # It's good practice to keep defaults strict and open up paths as needed.
+    defaults:
+        # These are safe defaults, often you don't need to change them.
+        # We will override these settings for our API path specifically.
+        allow_origin: []
+        allow_methods: []
+        allow_headers: []
+        expose_headers: []
+        max_age: 0
+
+    # Define specific policies for different parts of your application.
+    paths:
+        # This is the main policy for your API. It applies to all URLs
+        # starting with /api/.
+        '^/api/':
+            # IMPORTANT: This allows requests only from the origin defined
+            # in your .env file. This is the crucial security setting.
+            # For this to work with `allow_credentials: true`, the environment variable
+            # must not be a wildcard ('*'), but a specific domain or a regex.
+            allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+            
+            # Defines which HTTP headers can be sent in the actual request.
+            # 'Content-Type' is for sending JSON data.
+            # 'Authorization' is for sending the JWT bearer token.
+            allow_headers: ['Content-Type', 'Authorization']
+            
+            # Defines which HTTP methods are allowed for cross-origin requests.
+            # These cover all standard REST API operations.
+            allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+            
+            # If true, the browser will be allowed to send cookies and other credentials
+            # with cross-origin requests. This is MANDATORY for the refresh token
+            # cookie (HttpOnly) to be sent by the browser to the /api/token/refresh endpoint.
+            allow_credentials: true
+            
+            # How long the result of a pre-flight request (OPTIONS) can be cached by the browser, in seconds.
+            # 3600 seconds = 1 hour.
+            max_age: 3600
+            
+            # Exposes specific headers to the frontend application.
+            # 'Link' is used by API Platform for pagination (e.g., rel="next").
+            # 'X-Correlation-ID' can be useful for debugging and tracing requests.
+            expose_headers: ['Link', 'X-Correlation-ID']
+
+        # A more permissive policy could be defined for public, non-sensitive paths if needed.
+        # For now, we only need to open up the API for our frontend.
+        # Example for a hypothetical public path:
+        # '^/public/':
+        #     allow_origin: ['*'] # Allows any origin
+        #     allow_methods: ['GET']
+        #     max_age: 3600

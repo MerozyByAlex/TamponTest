@@ -1,0 +1,37 @@
+{# templates/base.html.twig #}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        
+        {# ================================================================== #}
+        {# CORRECTION RESPONSIVE : Ajout de la balise viewport               #}
+        {# ================================================================== #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}{{ 'default.title'|trans|default('Welcome!') }}{% endblock %}</title>
+
+        <link rel="icon" href="data:image/svg+xml,...">
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        {% endblock %}
+
+        {# Script anti-FOUC (ne change pas) #}
+        <script>
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark-theme');
+                }
+            } catch (_) {}
+        </script>
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </body>
+</html>

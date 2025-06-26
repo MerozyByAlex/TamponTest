@@ -1,0 +1,17 @@
+{# templates/form/custom_form_theme.html.twig #}
+{% use 'form_div_layout.html.twig' %}
+
+{# On surcharge uniquement le bloc qui affiche les erreurs #}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {# C'est ici qu'on ajoute notre div avec la classe pour le style de l'encadré #}
+        <div class="form-errors-container">
+            {# La liste des erreurs avec sa propre classe pour le style du texte #}
+            <ul class="form-error-list">
+                {%- for error in errors -%}
+                    <li>{{ error.message }}</li>
+                {%- endfor -%}
+            </ul>
+        </div>
+    {%- endif -%}
+{%- endblock form_errors -%}

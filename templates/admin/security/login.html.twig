@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('pages/backoffice/login/login.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+<div class="login-container">
+
+    {% if app.user %}
+        <div class="mb-3 text-center">
+            <p>{{ 'login.logged_in_as'|trans({'%identifier%': app.user.userIdentifier}) }}</p>
+            <a href="{{ path('admin_logout') }}" class="btn btn-secondary">{{ 'login.logout'|trans }}</a>
+        </div>
+
+    {% else %}
+        
+        <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+            <span class="sun"></span>
+            <span class="moon"></span>
+        </button>
+
+        <form method="post">
+            {% if error %}
+                <div class="alert" role="alert">
+                    ⚠️ {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3">{{ 'login.heading'|trans }}</h1>
+
+            <label for="username">{{ 'login.email'|trans }}</label>
+            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+
+            <label for="password">{{ 'login.password'|trans }}</label>
+            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox">
+                <label for="_remember_me">
+                    <input type="checkbox" name="_remember_me" id="_remember_me">
+                    {{ 'login.stay_connected'|trans|default('Rester connecté') }}
+                </label>
+                
+                {# CORRECTION : Utilisation du bon nom de route 'admin_contact' #}
+                <a href="{{ path('admin_contact') }}" class="contact-admin-link">
+                    {{ 'login.contact_admin'|trans|default("Contacter l'admin") }}
+                </a>
+            </div>
+
+            <button class="btn-primary" type="submit">{{ 'login.button'|trans }}</button>
+        </form>
+
+        <div class="language-switch">
+            {% for locale in ['fr', 'en', 'de', 'es'] %}
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': locale})) }}"
+                   class="{{ app.request.locale == locale ? 'active' }}">
+                    {{ locale|upper }}
+                </a>
+            {% endfor %}
+        </div>
+        
+    {% endif %}
+</div>
+{% endblock %}

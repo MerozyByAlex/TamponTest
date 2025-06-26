@@ -1,0 +1,43 @@
+# config/packages/vich_uploader.yaml
+vich_uploader:
+    db_driver: orm # Specifies the database driver being used (Doctrine ORM)
+
+    mappings:
+        # This is the name of the mapping, it must correspond to the 'mapping' option
+        # in the @Vich\UploadableField annotation in your ImageAsset entity.
+        image_assets:
+            uri_prefix: /uploads/images/assets # Web path prefix for accessing uploaded files
+            upload_destination: '%kernel.project_dir%/public/uploads/images/assets' # Server path where files are stored
+
+            # Namer service to generate unique file names.
+            # SmartUniqueNamer attempts to keep the original filename while ensuring uniqueness.
+            # UniqidNamer generates a completely unique name, less readable but very safe.
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+            # Directory namer service to organize files into subdirectories.
+            # CurrentDateDirectoryNamer creates subdirectories based on date.
+            directory_namer:
+                service: Vich\UploaderBundle\Naming\CurrentDateDirectoryNamer
+                options: # Optional settings for CurrentDateDirectoryNamer
+                    date_format: 'Y/m/d' # Subdirectory format (e.g., 2024/05/31). Default is 'Y/m/d'.
+                    # Entity property to use for determining the date for the subdirectory.
+                    # Must be a DateTimeInterface. If omitted, current date/time is used.
+                    # Your ImageAsset entity uses TimestampableEntity, so 'createdAt' exists and is suitable.
+                    date_time_property: 'createdAt'
+
+            # If true, the file property (e.g., $imageFile) will be populated with a File object
+            # when the entity is loaded from the database, if the file exists.
+            inject_on_load: true
+
+            # If true, the old file will be deleted from the filesystem when the entity is updated
+            # with a new file.
+            delete_on_update: true
+
+            # If true, the file will be deleted from the filesystem when the entity is removed
+            # from the database.
+            delete_on_remove: true
+
+            # Note on 'dimensions':
+            # The 'dimensions' property in the @Vich\UploadableField annotation within your
+            # ImageAsset entity allows the bundle to attempt to populate image dimensions (width/height)
+            # into a specified entity property (e.g., private ?array $dimensions).

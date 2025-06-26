@@ -1,0 +1,70 @@
+{# C:\avecsa\backend\templates\Security\2fa_login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ '2fa.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# On utilise le CSS du dashboard pour un look cohérent, même sur la page de login 2FA #}
+    <link rel="stylesheet" href="{{ asset('pages/backoffice/dashboard/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="login-2fa-container">
+
+    {# Le sélecteur de langue utilise la route dédiée pour la persistence de la session #}
+    <div class="language-switch">
+        {% for locale in ['fr', 'en', 'de', 'es'] %}
+            <a href="{{ path('admin_change_locale', {'locale': locale}) }}"
+               class="{{ app.request.locale == locale ? 'active' }}">
+                {{ locale|upper }}
+            </a>
+        {% endfor %}
+    </div>
+    
+    {# Le toggle pour le thème (dark/light mode) #}
+    <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+        <span class="sun"></span>
+        <span class="moon"></span>
+    </button>
+
+    <div class="login-2fa-box">
+        <form method="post" action="{{ path('2fa_login_check') }}">
+            {% if error %}
+                <div class="alert" role="alert">
+                    {# Message d'erreur générique pour des raisons de sécurité #}
+                    ⚠️ {{ '2fa.error.invalid_code'|trans({}, 'security') }}
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3">{{ '2fa.heading'|trans }}</h1>
+
+            <label for="_auth_code" class="visually-hidden">{{ '2fa.code.label'|trans }}</label>
+            <input type="text"
+                   name="_auth_code"
+                   id="_auth_code"
+                   class="form-control"
+                   autocomplete="one-time-code"
+                   autofocus
+                   placeholder="------"
+                   maxlength="6"
+                   inputmode="numeric"
+                   pattern="\d{6}"
+                   required
+                   title="{{ '2fa.code.hint'|trans }}"
+            >
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox">
+                <label for="_trusted">
+                    <input type="checkbox" name="_trusted" id="_trusted" autocomplete="off">
+                    {{ '2fa.trust_device'|trans }}
+                </label>
+            </div>
+
+            <button class="btn-primary" type="submit">{{ '2fa.submit'|trans }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

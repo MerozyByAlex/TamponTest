@@ -1,0 +1,12 @@
+form.contact.email.not_blank: 'Por favor, introduzca su dirección de correo electrónico.'
+form.contact.email.invalid: "El correo electrónico '{{ value }}' no es un correo válido."
+form.contact.subject.not_blank: 'Por favor, elige un asunto.'
+form.contact.priority.not_blank: 'Por favor, elija una prioridad para este asunto.'
+form.contact.message.not_blank_detailed: 'Este campo no puede estar vacío, debe detallar su solicitud.'
+form.contact.message.min_length: 'No ha detallado su solicitud lo suficiente, por favor complétela.'
+form.contact.lastName.not_blank: 'Debe proporcionar su apellido.'
+form.contact.firstName.not_blank: 'Debe proporcionar su nombre.'
+form.contact.phonePrefix.not_blank: 'Por favor, seleccione un prefijo telefónico.'
+form.contact.phone.not_blank: 'El número de teléfono es obligatorio.'
+form.contact.phone.invalid_format: 'Este formato de número de teléfono no es válido.'
+form.contact.phone.prefix_mismatch: 'Este número de teléfono no corresponde con el prefijo seleccionado.'

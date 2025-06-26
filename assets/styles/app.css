@@ -1,0 +1,190 @@
+/* ================================================================== */
+/* DÉFINITION DES VARIABLES DE THÈME                                 */
+/* ================================================================== */
+:root {
+    --bg-color: #f4f6f8;
+    --text-color: #222;
+    --surface-bg-color: #ffffff;
+    --surface-text-color: #222;
+    --input-bg-color: #ffffff;
+    --input-border-color: #ccc;
+    --input-text-color: #222;
+    --primary-color: #4a90e2;
+    --primary-text-color: #ffffff;
+}
+
+:root.dark-theme {
+    --bg-color: #1e1e1e;
+    --text-color: #e1e1e1;
+    --surface-bg-color: #2b2b2b;
+    --surface-text-color: #e1e1e1;
+    --input-bg-color: #3c3c3c;
+    --input-border-color: #555;
+    --input-text-color: #e1e1e1;
+}
+
+/* ================================================================== */
+/* STYLES GLOBAUX                                                   */
+/* ================================================================== */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ================================================================== */
+/* COMPOSANT : BOUTON DE THÈME (Taille réduite pour le header)       */
+/* ================================================================== */
+.theme-toggle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--surface-bg-color);
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    flex-shrink: 0;
+}
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+.theme-toggle .sun, .theme-toggle .moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+}
+.theme-toggle .sun {
+    background-color: var(--text-color);
+    border-radius: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+.theme-toggle .moon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+}
+:root.dark-theme .theme-toggle .sun {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(180deg);
+}
+:root.dark-theme .theme-toggle .moon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(180deg);
+}
+
+/* ================================================================== */
+/* COMPOSANT : MENU DÉROULANT DES LANGUES (pour le header)            */
+/* ================================================================== */
+.language-dropdown {
+    position: relative;
+}
+.language-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.language-dropdown-toggle:hover {
+    background-color: var(--input-border-color);
+}
+.language-dropdown-toggle svg {
+    stroke: var(--text-color);
+    transition: transform 0.2s ease;
+}
+.language-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--surface-bg-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1010;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s 0.2s;
+}
+.language-dropdown:hover .language-dropdown-menu,
+.language-dropdown.is-open .language-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
+.language-dropdown.is-open .language-dropdown-toggle svg {
+    transform: rotate(180deg);
+}
+.language-dropdown-menu a {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--text-color);
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+.language-dropdown-menu a:hover,
+.language-dropdown-menu a.active {
+    background: var(--primary-color);
+    color: var(--primary-text-color);
+}
+
+/* ================================================================== */
+/* NOUVEAU COMPOSANT GLOBAL : SÉLECTEUR DE LANGUE SIMPLE              */
+/* (Utilisé sur les pages Login et Contact)                           */
+/* ================================================================== */
+.language-switch {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+.language-switch a {
+    background: none;
+    border: 1px solid var(--input-border-color, #ccc);
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--text-color, #222);
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.language-switch a:hover,
+.language-switch a.active {
+    background-color: var(--primary-color, #4a90e2);
+    color: var(--primary-text-color, white);
+    border-color: var(--primary-color, #4a90e2);
+}

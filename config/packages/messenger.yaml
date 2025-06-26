@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        failure_transport: failed
+
+        transports:
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://' # Décommentez si vous avez besoin d'un transport synchrone explicite
+
+        routing:
+            # Définissez ici quels types de messages vont vers quels transports.
+            # Si vous voulez que la plupart des messages aillent vers 'async' par défaut :
+            # App\Message\*: async # Exemple : tous les messages dans App\Message vont vers async
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            Symfony\Component\Notifier\Message\ChatMessage: async
+            Symfony\Component\Notifier\Message\SmsMessage: async

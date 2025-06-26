@@ -1,0 +1,12 @@
+form.contact.email.not_blank: 'Bitte geben Sie Ihre E-Mail-Adresse ein.'
+form.contact.email.invalid: "Die E-Mail-Adresse '{{ value }}' ist ungültig."
+form.contact.subject.not_blank: 'Bitte wählen Sie einen Betreff.'
+form.contact.priority.not_blank: 'Bitte wählen Sie eine Priorität für dieses Thema.'
+form.contact.message.not_blank_detailed: 'Dieses Feld darf nicht leer sein, Sie müssen Ihre Anfrage detailliert beschreiben.'
+form.contact.message.min_length: 'Sie haben Ihre Anfrage nicht ausreichend detailliert, bitte vervollständigen Sie sie.'
+form.contact.lastName.not_blank: 'Sie müssen Ihren Nachnamen angeben.'
+form.contact.firstName.not_blank: 'Sie müssen Ihren Vornamen angeben.'
+form.contact.phonePrefix.not_blank: 'Bitte wählen Sie eine Telefonvorwahl.'
+form.contact.phone.not_blank: 'Die Telefonnummer ist erforderlich.'
+form.contact.phone.invalid_format: 'Dieses Telefonnummernformat ist ungültig.'
+form.contact.phone.prefix_mismatch: 'Diese Telefonnummer stimmt nicht mit der ausgewählten Vorwahl überein.'

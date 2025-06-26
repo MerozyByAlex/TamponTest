@@ -1,0 +1,80 @@
+# translations/messages.de.yaml
+
+login:
+  title: 'Anmelden'
+  heading: 'Anmeldung'
+  email: 'E-Mail-Adresse'
+  password: 'Passwort'
+  stay_connected: 'Angemeldet bleiben'
+  contact_admin: 'Administrator kontaktieren'
+  button: 'Einloggen'
+  logged_in_as: 'Angemeldet als %identifier%'
+  logout: 'Abmelden'
+  error: 'Ungültige Zugangsdaten.'
+
+contact:
+  title: 'Administrator kontaktieren'
+  heading: 'Administrator kontaktieren'
+  subheading: 'Ein Problem, eine Frage? Füllen Sie das folgende Formular aus.'
+  subheading_success: 'Vielen Dank für Ihre Kontaktaufnahme. Ihre Anfrage wird nun bearbeitet.'
+  button: 'Nachricht senden'
+  back_to_login: 'Zurück zur Anmeldeseite'
+  success_message: 'Ihre Nachricht wurde erfolgreich gesendet.'
+  flash_success: 'Ihre Nachricht wurde erfolgreich gesendet. Der Administrator wird sich so schnell wie möglich bei Ihnen melden.'
+
+form:
+  contact:
+    email:
+      label: 'Ihre E-Mail-Adresse'
+      placeholder: 'name@beispiel.de'
+    subject:
+      label: 'Betreff'
+      placeholder: 'Wählen Sie einen Betreff'
+      choices:
+        connection: 'Verbindungsproblem'
+        information: 'Informationsanfrage'
+        feature: 'Verbesserungsvorschlag'
+        access: 'Zugangsanfrage'
+    priority:
+      label: 'Priorität'
+      placeholder: 'Wählen Sie eine Priorität'
+      choices:
+        low: 'Niedrig'
+        medium: 'Mittel'
+        high: 'Hoch'
+        critical: 'Kritisch'
+    message:
+      label: 'Ihre Nachricht'
+      placeholder: 'Beschreiben Sie Ihre Anfrage hier im Detail...'
+    lastName:
+      label: 'Nachname'
+      placeholder: 'Ihr Nachname'
+    firstName:
+      label: 'Vorname'
+      placeholder: 'Ihr Vorname'
+    phonePrefix:
+      label: 'Vorwahl'
+    phone:
+      label: 'Telefonnummer'
+    companyName:
+      label: 'Firmenname (Optional)'
+      placeholder: 'Ihr Firmenname'
+
+admin:
+  action:
+    logout: 'Abmelden'
+
+dashboard:
+  title: 'Dashboard'
+  greeting: 'Hallo %name%'
+  message: 'Dies ist der Verwaltungsbereich Ihrer Website.'
+  controller_path_label: 'Controller-Pfad'
+  template_path_label: 'Template-Pfad'
+  debug:
+    title: 'Debug-Informationen'
+  security:
+    title: 'Sicherheitseinstellungen'
+    2fa_title: 'Zwei-Faktor-Authentifizierung (2FA)'
+    2fa_enabled: 'Die Zwei-Faktor-Authentifizierung ist aktiviert.'
+    2fa_disabled_recommendation: 'Aktivieren Sie 2FA für bessere Sicherheit.'
+    enable_2fa_button: '2FA aktivieren'
